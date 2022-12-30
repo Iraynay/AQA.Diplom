@@ -6,8 +6,7 @@ services:
       - '3306:3306'
     security_opt:
       - seccomp:unconfined
-    volumes:
-          - ./data_sql:/var/lib/sql
+
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=app
@@ -28,3 +27,7 @@ services:
     image: node-app:1.0
     ports:
       - '9999:9999'
+
+
+      #    volumes:
+      #          - ./data_sql:/var/lib/sql

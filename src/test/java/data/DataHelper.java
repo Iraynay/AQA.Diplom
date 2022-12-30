@@ -75,7 +75,7 @@ public class DataHelper {
     }
 
     public static String getInvalidCVC() {
-        return "2345";
+        return "23";
     }
 
     public static String getEmptyCVC() {

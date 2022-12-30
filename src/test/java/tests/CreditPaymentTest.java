@@ -1,12 +1,8 @@
 package tests;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import data.DBHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import data.DBHelper;
 import data.DataHelper;
 import page.MainPage;
@@ -15,15 +11,15 @@ import page.PaymentPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CardPaymentTest {
+public class CreditPaymentTest {
     MainPage mainPage = new MainPage();
     PaymentPage paymentPage = new PaymentPage();
 
     @BeforeEach
     void shouldOpenApp() {
-        //     DBHelper.clean();
+        DBHelper.clean();
         open("http://localhost:8080", MainPage.class);
-        mainPage.buyCard();
+        mainPage.buyWithCredit();
     }
 
     @BeforeAll
@@ -37,7 +33,7 @@ public class CardPaymentTest {
     }
 
     @Test
-    void shouldSuccessPayIfValidApprovedCard() {
+    void shouldSuccessCreditPayIfValidApprovedCard() {
         val cardNumber = DataHelper.getValidCardNumber();
         val month = DataHelper.getValidMonth();
         val year = DataHelper.getValidYear();
@@ -46,12 +42,11 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectApprovalFromBank();
         val expected = DataHelper.getValidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        val actual = DBHelper.getStatusCreditBuy();
         assertEquals(expected, actual);
     }
-
     @Test
-    void shouldDeclinedPayIfDeclinedCard() {
+    void shouldDeclinedCreditPayIfDeclinedCard() {
         val cardNumber = DataHelper.getInvalidCardNumber();
         val month = DataHelper.getValidMonth();
         val year = DataHelper.getValidYear();
@@ -60,7 +55,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectRejectionFromBank();
         val expected = DataHelper.getInvalidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        val actual = DBHelper.getStatusCreditBuy();
         assertEquals(expected, actual);
     }
     @Test
@@ -84,7 +79,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectRejectionFromBank();
         val expected = DataHelper.getInvalidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        val actual = DBHelper.getStatusCreditBuy();
         assertEquals(expected, actual);
     }
 
@@ -118,7 +113,6 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
-
     @Test
     void shouldErrorMessageIfInvalidYear() {
         val cardNumber = DataHelper.getValidCardNumber();
@@ -161,6 +155,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitSureFillOutField();
     }
+
     @Test
     void shouldErrorMessageIfInvalidCVC() {
         val cardNumber = DataHelper.getValidCardNumber();
@@ -181,5 +176,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
+
+
 
 }

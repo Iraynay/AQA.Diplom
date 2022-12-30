@@ -8,8 +8,9 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
 allure {
     version = '2.16.1'
@@ -30,8 +31,9 @@ dependencies {
     testImplementation 'mysql:mysql-connector-java:8.0.31'
     implementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'io.qameta.allure:allure-selenide:2.16.1'
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
-    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.3.1'
+    testImplementation 'commons-dbutils:commons-dbutils:1.7'
+    implementation 'org.springframework:spring-jdbc:5.3.23'
+
 
 
     testImplementation 'org.projectlombok:lombok:1.18.20'
@@ -39,15 +41,14 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'io.rest-assured:rest-assured:4.3.0'
-    testImplementation 'commons-dbutils:commons-dbutils:1.7'
-    implementation 'org.springframework:spring-jdbc:5.3.23'
+
 
 }
 
 test {
     useJUnitPlatform()
     systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-    systemProperty 'url', System.getProperty('url')
+    systemProperty 'url', System.getProperty('url', 'jdbc:mysql://localhost:3306/app')
     systemProperty 'user', System.getProperty('user')
     systemProperty 'password', System.getProperty('password')
 
