@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardPaymentTest {
     MainPage mainPage = new MainPage();
-    PaymentPage paymentPage = new PaymentPage();
+
 
     @BeforeEach
     void shouldOpenApp() {
-        //     DBHelper.clean();
+        DBHelper.clean();
         open("http://localhost:8080", MainPage.class);
-        mainPage.buyCard();
+     //  mainPage.buyCard();
     }
 
     @BeforeAll
@@ -38,146 +38,159 @@ public class CardPaymentTest {
 
     @Test
     void shouldSuccessPayIfValidApprovedCard() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectApprovalFromBank();
-        val expected = DataHelper.getValidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        var expected = DataHelper.getValidCardStatus();
+        var actual = DBHelper.getStatusBuy();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldDeclinedPayIfDeclinedCard() {
-        val cardNumber = DataHelper.getInvalidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getInvalidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectRejectionFromBank();
-        val expected = DataHelper.getInvalidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        var expected = DataHelper.getInvalidCardStatus();
+        var actual = DBHelper.getStatusBuy();
         assertEquals(expected, actual);
     }
     @Test
     void shouldErrorMessageIfEmptyForm() {
-        val cardNumber = DataHelper.getEmptyCardNumber();
-        val month = DataHelper.getEmptyMonth();
-        val year = DataHelper.getEmptyYear();
-        val owner = DataHelper.getEmptyCardHolder();
-        val cvs = DataHelper.getEmptyCVC();
+        var cardNumber = DataHelper.getEmptyCardNumber();
+        var month = DataHelper.getEmptyMonth();
+        var year = DataHelper.getEmptyYear();
+        var owner = DataHelper.getEmptyCardHolder();
+        var cvs = DataHelper.getEmptyCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
         paymentPage.waitSureFillOutField();
     }
     @Test
     void shouldErrorMessageIfInvalidCard() {
-        val cardNumber = DataHelper.getRandomCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getRandomCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.expectRejectionFromBank();
-        val expected = DataHelper.getInvalidCardStatus();
-        val actual = DBHelper.getStatusBuy();
+        var expected = DataHelper.getInvalidCardStatus();
+        var actual = DBHelper.getStatusBuy();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldErrorMessageIfEmptyCardNumber() {
-        val cardNumber = DataHelper.getEmptyCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getEmptyCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
     @Test
     void shouldErrorMessageIfInvalidMonth() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getInValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getInValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidDuration();
     }
     @Test
     void shouldErrorMessageIfEmptyMonth() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getEmptyMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getEmptyMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
 
     @Test
     void shouldErrorMessageIfInvalidYear() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getInvalidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getInvalidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidYear();
     }
 
     @Test
     void shouldErrorMessageIfEmptyYear() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getEmptyYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getEmptyYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
 
     @Test
     void shouldErrorMessageIfInvalidCardHolder() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getRandomCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getRandomCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitSureFillOutField();
     }
     @Test
     void shouldErrorMessageIfEmptyCardHolder() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getEmptyCardHolder();
-        val cvs = DataHelper.getValidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getEmptyCardHolder();
+        var cvs = DataHelper.getValidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitSureFillOutField();
     }
     @Test
     void shouldErrorMessageIfInvalidCVC() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getInvalidCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getInvalidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
     @Test
     void shouldErrorMessageIfEmptyCVC() {
-        val cardNumber = DataHelper.getValidCardNumber();
-        val month = DataHelper.getValidMonth();
-        val year = DataHelper.getValidYear();
-        val owner = DataHelper.getCardHolder();
-        val cvs = DataHelper.getEmptyCVC();
+        var cardNumber = DataHelper.getValidCardNumber();
+        var month = DataHelper.getValidMonth();
+        var year = DataHelper.getValidYear();
+        var owner = DataHelper.getCardHolder();
+        var cvs = DataHelper.getInvalidCVC();
+        var paymentPage = new MainPage().buyCard();
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }

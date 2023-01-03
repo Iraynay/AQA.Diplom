@@ -13,14 +13,14 @@ services:
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
 
-#  postgres:
-#    image: postgres:latest
-#    ports:
-#      - '5432:5432'
-#    environment:
-#      - POSTGRES_DB=app
-#      - POSTGRES_USER=app
-#      - POSTGRES_PASSWORD=pass
+  postgres:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=pass
 
   node-app:
     build: ./gate-simulator
@@ -28,6 +28,3 @@ services:
     ports:
       - '9999:9999'
 
-
-      #    volumes:
-      #          - ./data_sql:/var/lib/sql

@@ -1,4 +1,5 @@
 package data;
+import lombok.SneakyThrows;
 import lombok.val;
 import java.sql.SQLException;
 
@@ -11,16 +12,16 @@ public class DBHelper {
 
     private DBHelper () {
     }
-
+    @SneakyThrows
     public static String getStatusBuy() {
-        val statusSql = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
+        var statusSql = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (
-                val connection = getConnection(url, user, password);
-                val statusStmt = connection.createStatement();
+                var connection = getConnection(url, user, password);
+                var statusStmt = connection.createStatement();
         ) {
-            try (val rs = statusStmt.executeQuery(statusSql)) {
+            try (var rs = statusStmt.executeQuery(statusSql)) {
                 if (rs.next()) {
-                    val status = rs.getString(1);
+                    var status = rs.getString(1);
 
                     return status;
                 }
@@ -33,15 +34,19 @@ public class DBHelper {
 
     }
 
+
+
+    @SneakyThrows
+
     public static String getStatusCreditBuy() {
-        val statusSql = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1";
+        var statusSql = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1";
         try (
-                val connection = getConnection(url, user, password);
-                val statusStmt = connection.createStatement();
+                var connection = getConnection(url, user, password);
+                var statusStmt = connection.createStatement();
         ) {
-            try (val rs = statusStmt.executeQuery(statusSql)) {
+            try (var rs = statusStmt.executeQuery(statusSql)) {
                 if (rs.next()) {
-                    val status = rs.getString(1);
+                    var status = rs.getString(1);
 
                     return status;
                 }
@@ -53,14 +58,14 @@ public class DBHelper {
     }
 
     public static void clean() {
-        val credit = "DELETE FROM credit_request_entity";
-        val order = "DELETE FROM order_entity";
-        val payment = "DELETE FROM payment_entity";
+        var credit = "DELETE FROM credit_request_entity";
+        var order = "DELETE FROM order_entity";
+        var payment = "DELETE FROM payment_entity";
         try (
-                val connection = getConnection(url, user, password);
-                val prepareStatPay = connection.createStatement();
-                val prepareStatCredit = connection.createStatement();
-                val prepareStatOrder = connection.createStatement();
+                var connection = getConnection(url, user, password);
+                var prepareStatPay = connection.createStatement();
+                var prepareStatCredit = connection.createStatement();
+                var prepareStatOrder = connection.createStatement();
 
         ) {
             prepareStatPay.executeUpdate(payment);

@@ -2,6 +2,8 @@ package data;
 
 import com.github.javafaker.Faker;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataHelper {
@@ -36,6 +38,7 @@ public class DataHelper {
 
     public static String getValidMonth() {
         return "06";
+
     }
 
     public static String getInValidMonth() {
@@ -47,7 +50,9 @@ public class DataHelper {
     }
 
     public static String getValidYear() {
-        return "25";
+     //   return LocalDate.now().plusYears(years).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        return LocalDate.now().plusYears(3).format(DateTimeFormatter.ofPattern("yy"));
+
     }
 
     public static String getInvalidYear() {
