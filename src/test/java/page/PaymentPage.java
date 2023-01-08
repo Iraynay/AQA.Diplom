@@ -1,4 +1,5 @@
 package page;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
@@ -22,7 +23,7 @@ public class PaymentPage {
     private SelenideElement cardExpired = $(withText("Истёк срок действия карты"));
     private SelenideElement requiredField = $(withText("Поле обязательно для заполнения"));
 
-    public void fillOutFields(String cardNumber, String month, String year, String owner, String cvs){
+    public void fillOutFields(String cardNumber, String month, String year, String owner, String cvs) {
         fieldCardNumber.setValue(cardNumber);
         fieldMonth.setValue(month);
         fieldYear.setValue(year);
@@ -31,26 +32,27 @@ public class PaymentPage {
         buttonContinue.click();
     }
 
-    public void expectApprovalFromBank(){
+    public void expectApprovalFromBank() {
         bankApproved.should(Condition.visible, Duration.ofSeconds(15));
     }
 
-    public void expectRejectionFromBank(){errorBankRefusal.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    public void expectRejectionFromBank() {
+        errorBankRefusal.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-    public void waitInvalidFormat(){
+    public void waitInvalidFormat() {
         errorFormat.shouldBe(Condition.visible);
     }
 
-    public void waitSureFillOutField(){
+    public void waitSureFillOutField() {
         requiredField.shouldBe(Condition.visible);
     }
 
-    public void waitInvalidDuration(){
+    public void waitInvalidDuration() {
         invalidDurationCard.shouldBe(Condition.visible);
     }
 
-    public void waitInvalidYear(){
+    public void waitInvalidYear() {
         cardExpired.shouldBe(Condition.visible);
     }
 

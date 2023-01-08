@@ -9,6 +9,7 @@ import java.util.Locale;
 public class DataHelper {
     private static Faker fakerEn = new Faker(new Locale("en"));
     private static Faker fakerRu = new Faker(new Locale("ru"));
+
     private DataHelper() {
     }
 
@@ -50,7 +51,7 @@ public class DataHelper {
     }
 
     public static String getValidYear() {
-     //   return LocalDate.now().plusYears(years).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        //   return LocalDate.now().plusYears(years).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return LocalDate.now().plusYears(3).format(DateTimeFormatter.ofPattern("yy"));
 
     }

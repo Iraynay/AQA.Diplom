@@ -1,4 +1,5 @@
 package page;
+
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -15,7 +16,7 @@ public class MainPage {
         return new PaymentPage();
     }
 
-    public PaymentPage buyWithCredit(){
+    public PaymentPage buyWithCredit() {
         initiateBuyWithCredit.click();
         return new PaymentPage();
     }

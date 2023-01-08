@@ -1,4 +1,5 @@
 package tests;
+
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DBHelper;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -23,7 +24,7 @@ public class CardPaymentTest {
     void shouldOpenApp() {
         DBHelper.clean();
         open("http://localhost:8080", MainPage.class);
-     //  mainPage.buyCard();
+        //  mainPage.buyCard();
     }
 
     @BeforeAll
@@ -65,6 +66,7 @@ public class CardPaymentTest {
         var actual = DBHelper.getStatusBuy();
         assertEquals(expected, actual);
     }
+
     @Test
     void shouldErrorMessageIfEmptyForm() {
         var cardNumber = DataHelper.getEmptyCardNumber();
@@ -77,6 +79,7 @@ public class CardPaymentTest {
         paymentPage.waitInvalidFormat();
         paymentPage.waitSureFillOutField();
     }
+
     @Test
     void shouldErrorMessageIfInvalidCard() {
         var cardNumber = DataHelper.getRandomCardNumber();
@@ -103,6 +106,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
+
     @Test
     void shouldErrorMessageIfInvalidMonth() {
         var cardNumber = DataHelper.getValidCardNumber();
@@ -114,6 +118,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidDuration();
     }
+
     @Test
     void shouldErrorMessageIfEmptyMonth() {
         var cardNumber = DataHelper.getValidCardNumber();
@@ -161,6 +166,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitSureFillOutField();
     }
+
     @Test
     void shouldErrorMessageIfEmptyCardHolder() {
         var cardNumber = DataHelper.getValidCardNumber();
@@ -172,6 +178,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitSureFillOutField();
     }
+
     @Test
     void shouldErrorMessageIfInvalidCVC() {
         var cardNumber = DataHelper.getValidCardNumber();
@@ -183,6 +190,7 @@ public class CardPaymentTest {
         paymentPage.fillOutFields(cardNumber, month, year, owner, cvs);
         paymentPage.waitInvalidFormat();
     }
+
     @Test
     void shouldErrorMessageIfEmptyCVC() {
         var cardNumber = DataHelper.getValidCardNumber();
